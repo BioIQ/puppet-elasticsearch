@@ -162,10 +162,12 @@ class elasticsearch::package {
 
   if ($elasticsearch::package_provider == 'package') {
 
+    class { 'elasticsearch::repo': }
     package { $elasticsearch::params::package:
       ensure   => $package_ensure,
       source   => $pkg_source,
-      provider => $pkg_provider
+      provider => $pkg_provider,
+      require  => Class['elasticsearch::repo']
     }
 
   } else {
